@@ -92,9 +92,31 @@ const userLogin = async (req, res) => {
     });
   }
 };
+const userCurrent = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const userDetails = await UserModel.findById(userId).select("-password");
+    if (!userDetails) {
+      return res.json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    // Send the user details without the password
+    return res.json({
+      success: true,
+      userDetails,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: "Internal Server Error .",
+    });
+  }
+};
 
 const userUpdate = async (req, res) => {
-  const userId = req.params.userId;
+  const  {userId} = req.params;
   const updateData = req.body;
   try {
     const result = await UserModel.updateOne(
@@ -111,7 +133,7 @@ const userUpdate = async (req, res) => {
 };
 
 const userDelete = async (req, res) => {
-  const userId = req.params.userId;
+  const {userId} = req.params;
   try {
     const result = await UserModel.deleteOne({ _id: userId });
     if (result.deletedCount === 0) {
