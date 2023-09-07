@@ -116,7 +116,7 @@ const userCurrent = async (req, res) => {
 };
 
 const userUpdate = async (req, res) => {
-  const  {userId} = req.params;
+  const userId = req.params.userId;
   const updateData = req.body;
   try {
     const result = await UserModel.updateOne(
@@ -133,7 +133,7 @@ const userUpdate = async (req, res) => {
 };
 
 const userDelete = async (req, res) => {
-  const {userId} = req.params;
+  const userId = req.params.userId;
   try {
     const result = await UserModel.deleteOne({ _id: userId });
     if (result.deletedCount === 0) {
@@ -148,6 +148,7 @@ const userDelete = async (req, res) => {
 module.exports = {
   userSignup,
   userLogin,
+  userCurrent,
   userUpdate,
   userDelete,
 };
