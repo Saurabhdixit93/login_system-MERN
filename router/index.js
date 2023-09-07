@@ -7,5 +7,5 @@ router.get("/", (req, res) => {
     message: "Backend working fine.....",
   });
 });
-
+router.use("/user", require("./userRoutes"));
 module.exports = router;
